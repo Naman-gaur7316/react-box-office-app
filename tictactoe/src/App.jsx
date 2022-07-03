@@ -1,42 +1,58 @@
 /* eslint-disable react/function-component-definition */
 import React,  { useState } from 'react';
 import Board from './components/Board';
+import History from './components/History';
 import './components/styles/root.scss';
 import { calWinner } from './helperCode';
 
 
 const App = () => {
-  const [board, setBoard] = useState(Array(9).fill(null));
-  const [isNext, setIsNext] = useState(true);
+  const [history, setHistory] = useState([
+    {board: Array(9).fill(null), isXNext: true},
+  ]);
 
-  const winner = calWinner(board);
-  
+  console.log("history: ",  history);
+  // console.log(setHistory);
+  const [currentMove, setCurrentMove] = useState(0);
 
-  const message = winner?`Winner is ${winner}`:`Next player is ${isNext?"X":"O"}`;
+  const current = history[currentMove];
+  const winner = calWinner(current.board);
+  // console.log(current);
+
+  const message = winner?`Winner is ${winner}`:`Next player is ${current.isXNext?"X":"O"}`;
 
   const handleSquareClick = position => {
-    if (board[position] !== null || winner) {
+    if (current.board[position] !== null || winner) {
       return;
     }
 
-    setBoard(prev => {
-      return prev.map((prevVal, pos) => {
+    setHistory(prev => {
+      const lastElem = prev[prev.length - 1];
+
+      const newBoard =  lastElem.board.map((prevVal, pos) => {
         if (pos === position) {
-          return isNext ? 'X' : 'O';
+          return lastElem.isXNext ? 'X' : 'O';
         }
 
         return prevVal;
       });
+
+      return prev.concat({ board: newBoard, isXNext: !lastElem.isXNext })
     });
 
-    setIsNext(prev => !prev);
+    setCurrentMove(prev => prev + 1);
   };
+
+  const goBack = (index) => {
+    setCurrentMove(index)
+  }
 
   return (
     <div className="app">
       <h1>TIC TAC TOE</h1>
       <h2>{ message }</h2>
-      <Board board={board} handleSquareClick={handleSquareClick} />
+      <Board board={current.board} handleSquareClick={handleSquareClick} />
+      <History history={history} goBack={ goBack } currentMove={ currentMove } />
     </div>
   );
 };
