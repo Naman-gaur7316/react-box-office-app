@@ -14,8 +14,14 @@ export function calWinner(Squares){
         const [a, b, c] = lines[i];
 
         if(Squares[a] && Squares[a] === Squares[b] && Squares[a] === Squares[c]){
-            return Squares[a];
+            return {
+                winner: Squares[a],
+                winningPattern: [a, b, c]
+            }
         }
     }
-    return false;
+    return {
+        winner: null,
+        winningPattern: []
+    }
 }

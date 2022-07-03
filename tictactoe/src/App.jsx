@@ -6,11 +6,12 @@ import TieMessage from './components/TieMessage';
 import './components/styles/root.scss';
 import { calWinner } from './helperCode';
 
+const NEW_GAME = [
+  {board: Array(9).fill(null), isXNext: true},
+]
 
 const App = () => {
-  const [history, setHistory] = useState([
-    {board: Array(9).fill(null), isXNext: true},
-  ]);
+  const [history, setHistory] = useState(NEW_GAME);
 
   // console.log("history: ",  history);
   // console.log(setHistory);
@@ -19,7 +20,8 @@ const App = () => {
   const [initialCount, setInitialCount] = useState(0);
 
   const current = history[currentMove];
-  const winner = calWinner(current.board);
+  const {winner, winningPattern} = calWinner(current.board);
+  // console.log(winningPattern);
   // console.log(current);
   // let message;
   
@@ -54,12 +56,21 @@ const App = () => {
     setCurrentMove(index)
   }
 
+  const resetGame = () => {
+    setHistory(NEW_GAME);
+    setCurrentMove(0);
+    setInitialCount(0);
+  }
+
   return (
     <div className="app">
       <h1>TIC TAC TOE</h1>
       {/* <h2>{ message }</h2> */}
       <TieMessage winner={winner} current={current} initialCount={initialCount} />
-      <Board board={current.board} handleSquareClick={handleSquareClick} />
+      <Board board={current.board} handleSquareClick={handleSquareClick} winningPattern={winningPattern} />
+      <button type='button' onClick={resetGame}>
+        Start new game
+      </button>
       <History history={history} goBack={ goBack } currentMove={ currentMove } />
     </div>
   );

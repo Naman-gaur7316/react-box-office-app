@@ -2,13 +2,17 @@
 import React from 'react';
 import Square from './Square';
 
-const Board = ({ board, handleSquareClick }) => {
+const Board = ({ board, handleSquareClick, winningPattern }) => {
   
 
   const renderSquare = (position) => {
+
+    const isWinPosition = winningPattern.includes(position);
     return (
     <Square value={board[position]} 
-    onClick={() => handleSquareClick(position)} />
+    onClick={() => handleSquareClick(position)}
+    isWinPosition={isWinPosition}
+    />
     );
   };
 

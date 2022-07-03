@@ -18,7 +18,7 @@ const TieMessage = ({ winner, initialCount, current}) => {
         else if(!winner && noMoveLeft){
             message  = `Player X and O tied`;
         }
-        else if(winner !== false){
+        else if(winner){
             message = `Winner is ${winner}`;
         }
 
