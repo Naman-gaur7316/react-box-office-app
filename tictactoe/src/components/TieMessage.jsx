@@ -26,11 +26,11 @@ const TieMessage = ({ winner, initialCount, current}) => {
     }
 
   return (
-    <h2>
+    <div className='status-message'>
         {
             printMessage()
         }
-    </h2>
+    </div>
   )
 }
 

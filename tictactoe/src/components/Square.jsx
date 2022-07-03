@@ -6,13 +6,11 @@ import React from 'react';
 const Square = ({ value, onClick, isWinPosition }) => {
   return (
     <button type="button" 
-    className='square' 
     onClick={onClick} 
+    className={`square ${isWinPosition? 'winning' : ''} ${value === 'X'? 'text-green' : 'text-orange'}`}
     style={
       {
         fontWeight: isWinPosition? 'bold': 'normal',
-        color: isWinPosition? 'orangered' : 'black',
-        transition: 'all 0.5s'
       }
     }>
       {value}

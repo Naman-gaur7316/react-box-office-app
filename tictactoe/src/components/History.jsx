@@ -3,12 +3,15 @@ import React from 'react'
 
 const History = ({ history, goBack, currentMove }) => {
   return (
-    <ul>
+    
+    <div className='history-wrapper'>
+        <ul className='history'>
         {
             history.map((_, index) => {
                 return (
                     <li key={index}>
                         <button
+                        className={`btn-move  ${index === currentMove?'active' : ''}`}
                         style={ {
                             fontWeight: index === currentMove? 'bold' : 'normal',
                             // fontFamily: index === currentMove? 
@@ -18,13 +21,14 @@ const History = ({ history, goBack, currentMove }) => {
                             goBack(index)
                         }}
                         >
-                            { index === 0? 'Start the game':`Go to move ${index}`  }
+                            { index === 0? 'Start the game':`Go to move #${index}`  }
                         </button>
                     </li>
                 )
             })
         }
     </ul>
+    </div>
   )
 }
 
