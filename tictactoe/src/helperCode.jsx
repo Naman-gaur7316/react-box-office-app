@@ -17,5 +17,5 @@ export function calWinner(Squares){
             return Squares[a];
         }
     }
-    return null;
+    return false;
 }
